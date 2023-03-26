@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+//import Counter from "./components/Counter";
+import CreatePostList from "./components/PostList";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+  let [defaultPost, modifiedPost] =  useState([
+        {
+          id: 0,
+          title: 'sunt aut facere',
+          body: 'quia et suscipitsuscipit recusandae consequuntur',
+        },
+        {
+          id: 1,
+          title: 'qui est esse',
+          body: 'est rerum tempore vitaesequi',
+        },
+        {
+          id: 2,
+          title: 'ea molestias',
+          body: 'et iusto sed quo',
+        },
+      ]);
+
+      let [defaultPost2, modifiedPost2] =  useState([
+        {
+          id: 0,
+          title: '11sunt aut facere',
+          body: 'quia et suscipitsuscipit recusandae consequuntur',
+        },
+        {
+          id: 1,
+          title: '11qui est esse',
+          body: 'est rerum tempore vitaesequi',
+        },
+        {
+          id: 2,
+          title: '11ea molestias',
+          body: 'et iusto sed quo',
+        },
+      ]);
+
+    return (
+        <div className="App">
+            <CreatePostList obj={defaultPost} title={'Все посты за понедельник'}/>
+            <CreatePostList obj={defaultPost2} title={'Все посты за вторник'}/>
+        </div>
+    );
+};
 
 export default App;
