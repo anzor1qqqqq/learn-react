@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-//import Counter from "./components/Counter";
 import CreatePostList from "./components/PostList";
+import NewPostCreate from "./components/NewPostCreate";
 
 function App() {
-  let [defaultPost, modifiedPost] =  useState([
+  let [defaultPost, modifiedPost] = useState([
         {
           id: 0,
           title: 'sunt aut facere',
@@ -19,30 +19,27 @@ function App() {
           title: 'ea molestias',
           body: 'et iusto sed quo',
         },
-      ]);
+    ]);
 
-      let [defaultPost2, modifiedPost2] =  useState([
-        {
-          id: 0,
-          title: '11sunt aut facere',
-          body: 'quia et suscipitsuscipit recusandae consequuntur',
-        },
-        {
-          id: 1,
-          title: '11qui est esse',
-          body: 'est rerum tempore vitaesequi',
-        },
-        {
-          id: 2,
-          title: '11ea molestias',
-          body: 'et iusto sed quo',
-        },
-      ]);
+    const addPost = (obj) => {
+      modifiedPost([...defaultPost, obj])
+
+      const inputForm = document.querySelectorAll('[type="text"]')
+      
+      inputForm.forEach(item => {
+        item.value = '';
+      }); 
+    };
+
+    const mainRemove = index => {
+      console.log(index);
+      modifiedPost(defaultPost.filter(item => index !== item.id));
+    };
 
     return (
         <div className="App">
-            <CreatePostList obj={defaultPost} title={'Все посты за понедельник'}/>
-            <CreatePostList obj={defaultPost2} title={'Все посты за вторник'}/>
+          <NewPostCreate callback={addPost} />
+          <CreatePostList callback2={mainRemove} arr={defaultPost} obj={defaultPost} title={'Все посты'}/>
         </div>
     );
 };
