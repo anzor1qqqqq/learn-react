@@ -5,6 +5,12 @@ const CreatePostList = (props) => {
     const removeItemArr = index => {
         props.callback2(index);
     };
+
+    if (props.lengthArr === 0) {
+        return (
+            <h1 style={{textAlign: 'center'}}>Постов нет</h1>
+        );
+    };
       
     return (
         <div>

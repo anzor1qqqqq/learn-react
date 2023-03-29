@@ -7,7 +7,7 @@ import InputSearch from "./components/InputSearch";
 import './style/styleApp.css'
 
 function App() {
-  let [defaultPost, modifiedPost] = useState([
+  const [defaultPost, modifiedPost] = useState([
         {
           id: 0,
           title: 'sunt aut facere',
@@ -23,23 +23,21 @@ function App() {
           title: 'ea molestias',
           body: 'et iusto sed quo',
         },
-    ]);
-
-    let [defaultSort, modifiedSort] = useState('');
-    let [defaultSearch, modifiedSearch] = useState('');
+  ]);
+    
+    const [defaultFilter, modifiedFilter] = useState({search: '', sort: ''})
 
     const sortList = useMemo(() => {
-      if (defaultSort) {
-        return [...defaultPost].sort((a, b) => a[defaultSort].localeCompare(b[defaultSort]));
+      if (defaultFilter.sort) {
+        return [...defaultPost].sort((a, b) => a[defaultFilter.sort].localeCompare(b[defaultFilter.sort]));
       };
 
       return defaultPost;
-    }, [defaultPost, defaultSort]);
+    }, [defaultPost, defaultFilter.sort]);
 
     const searchList = useMemo(() => {
-      console.log(1);
-      return sortList.filter(item => item.title.includes(defaultSearch));
-    }, [sortList, defaultSearch]);
+      return sortList.filter(item => item.title.toLowerCase().includes(defaultFilter.search))
+    }, [sortList, defaultFilter.search]);
 
     const addPost = obj => {
       modifiedPost([...defaultPost, obj]);
@@ -55,36 +53,16 @@ function App() {
       modifiedPost(defaultPost.filter(item => index !== item.id));
     };
 
-    const sortPost = option => {
-      modifiedSort(option);
-    };
-
-    const searchPost = post => {
-      modifiedSearch(post);
-    };
-
     return (
         <div className="App">
           <NewPostCreate callback={addPost} />
 
           <hr style={{marginBottom: 15}}/>
-          <InputSearch callback={searchPost}/>
+          <InputSearch filter={defaultFilter} setFilter={modifiedFilter}/>
 
-          <SelectedOption callback={sortPost} value={defaultSort} defaultOption={'Сортировка по'} optionAnoth={[
-          {
-            id: 'title',
-            name: 'Названию',
-          },
-          {
-            id: 'body',
-            name: 'Описанию',
-          }
-          ]}/>
+          <SelectedOption filter={defaultFilter} setFilter={modifiedFilter} value={defaultFilter.sort} defaultOption={'Сортировка по'} optionAnoth={[{id: 'title', name: 'Названию'}, {id: 'body', name: 'Описанию'}]}/>
 
-          {defaultPost.length === 0 
-          ? <h1 style={{textAlign: 'center'}}>Постов нет</h1>
-          : <CreatePostList callback2={mainRemove} obj={searchList} title={'Все посты'}/>
-          }
+          <CreatePostList lengthArr={searchList.length} callback2={mainRemove} obj={searchList} title={'Все посты'}/>
         </div>
     );
 };
