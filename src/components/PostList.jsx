@@ -8,7 +8,7 @@ const CreatePostList = (props) => {
 
     if (props.lengthArr === 0) {
         return (
-            <h1 style={{textAlign: 'center'}}>Постов нет</h1>
+            <h1 style={{textAlign: 'center', marginTop: 10}}>Постов нет</h1>
         );
     };
       
