@@ -1,0 +1,40 @@
+.modal_block {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0,0,0, 0.5);
+}
+
+.modal_block.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal_content {
+    width: 50%;
+    height: 30%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.style_input_contant {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 44%;
+    justify-content: space-between;
+}
+
+.input_create_post {
+    padding: 5px;
+}
+
+.button {
+    padding: 5px;
+}

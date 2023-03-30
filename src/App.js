@@ -1,8 +1,9 @@
 import React, {useState, useMemo} from "react";
 import CreatePostList from "./components/PostList";
-import NewPostCreate from "./components/NewPostCreate";
+//import NewPostCreate from "./components/NewPostCreate";
 import SelectedOption from "./components/Selected";
 import InputSearch from "./components/InputSearch";
+import ModalNewPost from "./components/ModalNewPost";
 
 import './style/styleApp.css'
 
@@ -27,6 +28,8 @@ function App() {
     
     const [defaultFilter, modifiedFilter] = useState({search: '', sort: ''})
 
+    const [defaultModale, modifiedModale] = useState(false);
+
     const sortList = useMemo(() => {
       if (defaultFilter.sort) {
         return [...defaultPost].sort((a, b) => a[defaultFilter.sort].localeCompare(b[defaultFilter.sort]));
@@ -42,11 +45,11 @@ function App() {
     const addPost = obj => {
       modifiedPost([...defaultPost, obj]);
 
-      const inputForm = document.querySelectorAll('[type="text"]');
-      
-      inputForm.forEach(item => {
+      const inputCreatePost = document.querySelectorAll('.input_create_post');
+
+      inputCreatePost.forEach(item => {
         item.value = '';
-      }); 
+      })
     };
 
     const mainRemove = index => {
@@ -55,7 +58,8 @@ function App() {
 
     return (
         <div className="App">
-          <NewPostCreate callback={addPost} />
+          <button style={{marginBottom: 20}} onClick={() => modifiedModale(true)}>Создание нового поста</button>
+          <ModalNewPost length={defaultPost.length} callback={addPost} status={defaultModale} setStatus={modifiedModale}/>
 
           <hr style={{marginBottom: 15}}/>
           <InputSearch filter={defaultFilter} setFilter={modifiedFilter}/>
