@@ -6,11 +6,7 @@ const ModalNewPost = ({status, setStatus, callback, length}) => {
 
     let classStyle;
 
-    if (status) {
-        classStyle = ['modal_block', 'active'];
-    } else {
-        classStyle = ['modal_block'];
-    };
+    status ? classStyle = ['modal_block', 'active'] : classStyle = ['modal_block'];
 
     const endProgram = () => {
         defaultObj['id'] = length;

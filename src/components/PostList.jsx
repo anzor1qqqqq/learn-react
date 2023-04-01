@@ -1,24 +1,52 @@
 import React from "react";
 import CreatePost from "./Post";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import '../style/style.css';
+import '../style/styleLoad.css';
 
-const CreatePostList = (props) => {
+const CreatePostList = ({callback2, lengthArr, obj, title, load, status}) => {
     const removeItemArr = index => {
-        props.callback2(index);
+        callback2(index);
     };
 
-    if (props.lengthArr === 0) {
+    if (lengthArr === 0 && !load && status !== undefined) {
         return (
             <h1 style={{textAlign: 'center', marginTop: 10}}>Постов нет</h1>
+        );
+    } else if (status === undefined) {
+        return (
+            <h1 style={{textAlign: 'center', marginTop: 10}}>Ошибка</h1>
+        );
+    } else if (load) {
+        return (
+            <div className="content_load">
+                <div className="sk-chase">
+                    <div className="sk-chase-dot"></div>
+                    <div className="sk-chase-dot"></div>
+                    <div className="sk-chase-dot"></div>
+                    <div className="sk-chase-dot"></div>
+                    <div className="sk-chase-dot"></div>
+                    <div className="sk-chase-dot"></div>
+                </div>
+            </div>
         );
     };
       
     return (
         <div>
-            <h1 style={{textAlign: 'center', marginTop: 10}}>{props.title}</h1>
+            <h1 style={{textAlign: 'center', marginTop: 10}}>{title}</h1>
             
-            {props.obj.map((item, i) => {
-                return <CreatePost callback={removeItemArr} arr={props.obj} index={i} post={item} key={item.id}/>
-            })}
+            <TransitionGroup>
+            {obj.map((item, i) => 
+                    <CSSTransition
+                        key={item.id}
+                        timeout={500}
+                        classNames="post"
+                    >
+                    <CreatePost callback={removeItemArr} arr={obj} index={i} post={item}/>
+                    </CSSTransition>
+            )}
+            </TransitionGroup>
         </div>
     );
 };

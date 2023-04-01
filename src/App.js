@@ -1,46 +1,45 @@
-import React, {useState, useMemo} from "react";
+import React, {useState, useEffect} from "react";
 import CreatePostList from "./components/PostList";
-//import NewPostCreate from "./components/NewPostCreate";
 import SelectedOption from "./components/Selected";
 import InputSearch from "./components/InputSearch";
 import ModalNewPost from "./components/ModalNewPost";
+import { usePost } from './hooks/usePost';
+import { request } from "./get_server/getServer";
 
 import './style/styleApp.css'
 
 function App() {
-  const [defaultPost, modifiedPost] = useState([
-        {
-          id: 0,
-          title: 'sunt aut facere',
-          body: 'quia et suscipitsuscipit recusandae consequuntur',
-        },
-        {
-          id: 1,
-          title: 'qui est esse',
-          body: 'est rerum tempore vitaesequi',
-        },
-        {
-          id: 2,
-          title: 'ea molestias',
-          body: 'et iusto sed quo',
-        },
-  ]);
-    
+    const [defaultPost, modifiedPost] = useState([]);
     const [defaultFilter, modifiedFilter] = useState({search: '', sort: ''})
-
     const [defaultModale, modifiedModale] = useState(false);
+    const postRender = usePost(defaultPost, defaultFilter.search, defaultFilter.sort);
+    const [defaultLoad, modifiedLoad] = useState(false);
+    const [statusDefault, modifiedStatus] = useState('');
 
-    const sortList = useMemo(() => {
-      if (defaultFilter.sort) {
-        return [...defaultPost].sort((a, b) => a[defaultFilter.sort].localeCompare(b[defaultFilter.sort]));
+    useEffect(() => {
+      b();
+    }, []);
+
+    async function b() {
+      modifiedLoad(true);
+
+      const a = await request().catch(error => {
+        console.log(error);
+      });
+
+      try {
+        if (!a) {
+          throw new Error('Ошибка');
+        };
+
+        modifiedPost(a);
+      } catch(error) {
+        modifiedStatus(a);
+        console.log(error.message);
       };
 
-      return defaultPost;
-    }, [defaultPost, defaultFilter.sort]);
-
-    const searchList = useMemo(() => {
-      return sortList.filter(item => item.title.toLowerCase().includes(defaultFilter.search))
-    }, [sortList, defaultFilter.search]);
+      modifiedLoad(false);
+    };
 
     const addPost = obj => {
       modifiedPost([...defaultPost, obj]);
@@ -66,7 +65,7 @@ function App() {
 
           <SelectedOption filter={defaultFilter} setFilter={modifiedFilter} value={defaultFilter.sort} defaultOption={'Сортировка по'} optionAnoth={[{id: 'title', name: 'Названию'}, {id: 'body', name: 'Описанию'}]}/>
 
-          <CreatePostList lengthArr={searchList.length} callback2={mainRemove} obj={searchList} title={'Все посты'}/>
+          <CreatePostList lengthArr={postRender.length} callback2={mainRemove} obj={postRender} status={statusDefault} title={'Все посты'} load={defaultLoad}/>
         </div>
     );
 };
