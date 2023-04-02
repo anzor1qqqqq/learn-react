@@ -1,5 +1,6 @@
-import React from "react";
+import React from "react";  
 import CreatePost from "./Post";
+import ButtonSwitchList from "../components/ButtonSwitchList";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import '../style/style.css';
 import '../style/styleLoad.css';
@@ -47,6 +48,8 @@ const CreatePostList = ({callback2, lengthArr, obj, title, load, status}) => {
                     </CSSTransition>
             )}
             </TransitionGroup>
+
+            <ButtonSwitchList/>
         </div>
     );
 };
