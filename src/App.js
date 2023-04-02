@@ -5,7 +5,7 @@ import InputSearch from "./components/InputSearch";
 import ModalNewPost from "./components/ModalNewPost";
 import { usePost } from './hooks/usePost';
 import { useFetching } from "./hooks/useFetching";
-import { XCounter } from "./get_server/XCounter";
+/* import { useLink } from './hooks/useLink'; */
 
 import './style/styleApp.css'
 
@@ -16,16 +16,14 @@ function App() {
     const postRender = usePost(defaultPost, defaultFilter.search, defaultFilter.sort);
     const [defaultListElem, modifiedListElem] = useState({xTotal: '', page: 1, limit: 10});
 
-    XCounter(async num => {
-      modifiedListElem({...defaultListElem, XTotal: num});
-    });
+    console.log('defaultListElem: ', defaultListElem);
 
     const [startDate, defaultLoad, statusDefault] = useFetching(async date => {
       modifiedPost(date);
     }, defaultListElem);
 
     useEffect(() => {
-      startDate();``
+      startDate(modifiedListElem, defaultListElem);
     }, []);
 
     const addPost = obj => {
@@ -42,6 +40,7 @@ function App() {
       modifiedPost(defaultPost.filter(item => index !== item.id));
     };
 
+
     return (
         <div className="App">
           <button style={{marginBottom: 20}} onClick={() => modifiedModale(true)}>Создание нового поста</button>
@@ -52,7 +51,7 @@ function App() {
 
           <SelectedOption filter={defaultFilter} setFilter={modifiedFilter} value={defaultFilter.sort} defaultOption={'Сортировка по'} optionAnoth={[{id: 'title', name: 'Названию'}, {id: 'body', name: 'Описанию'}]}/>
 
-          <CreatePostList lengthArr={postRender.length} callback2={mainRemove} obj={postRender} status={statusDefault} title={'Все посты'} load={defaultLoad}/> 
+          <CreatePostList listElem={defaultListElem} setListElem={modifiedListElem} lengthArr={postRender.length} callback2={mainRemove} obj={postRender} status={statusDefault} title={'Все посты'} load={defaultLoad}/> 
         </div>
     );
 };
