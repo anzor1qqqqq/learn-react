@@ -5,7 +5,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import '../style/style.css';
 import '../style/styleLoad.css';
 
-const CreatePostList = ({callback2, lengthArr, obj, title, load, status}) => {
+const CreatePostList = ({callback2, lengthArr, obj, title, load, status, listElem, setListElem}) => {
     const removeItemArr = index => {
         callback2(index);
     };
@@ -49,7 +49,7 @@ const CreatePostList = ({callback2, lengthArr, obj, title, load, status}) => {
             )}
             </TransitionGroup>
 
-            <ButtonSwitchList/>
+            <ButtonSwitchList dlist={listElem} mList={setListElem}/>
         </div>
     );
 };

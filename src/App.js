@@ -1,11 +1,10 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useState, useEffect} from "react";
 import CreatePostList from "./components/PostList";
 import SelectedOption from "./components/Selected";
 import InputSearch from "./components/InputSearch";
 import ModalNewPost from "./components/ModalNewPost";
 import { usePost } from './hooks/usePost';
 import { useFetching } from "./hooks/useFetching";
-/* import { useLink } from './hooks/useLink'; */
 
 import './style/styleApp.css'
 
@@ -14,17 +13,15 @@ function App() {
     const [defaultFilter, modifiedFilter] = useState({search: '', sort: ''})
     const [defaultModale, modifiedModale] = useState(false);
     const postRender = usePost(defaultPost, defaultFilter.search, defaultFilter.sort);
-    const [defaultListElem, modifiedListElem] = useState({xTotal: '', page: 1, limit: 10});
-
-    console.log('defaultListElem: ', defaultListElem);
+    const [defaultListElem, modifiedListElem] = useState({xTotal: 100, page: 1, limit: 10});
 
     const [startDate, defaultLoad, statusDefault] = useFetching(async date => {
       modifiedPost(date);
-    }, defaultListElem);
+    }, defaultListElem, modifiedListElem);
 
     useEffect(() => {
-      startDate(modifiedListElem, defaultListElem);
-    }, []);
+      startDate();
+    }, [defaultListElem]);
 
     const addPost = obj => {
       modifiedPost([...defaultPost, obj]);
