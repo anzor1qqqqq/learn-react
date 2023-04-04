@@ -1,0 +1,26 @@
+.content_card_open {
+    display: flex;
+    width: 70%;
+    margin: 20px auto;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 4px solid #a1a1a1;
+    border-radius: 10px;
+}
+
+.title_id {
+    margin-bottom: 20px;
+}
+
+.content_title {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 35px;
+}
+
+.parag_text {
+    font-size: 20px;
+}
+

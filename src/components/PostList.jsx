@@ -42,9 +42,8 @@ const CreatePostList = ({callback2, lengthArr, obj, title, load, status, listEle
                     <CSSTransition
                         key={item.id}
                         timeout={500}
-                        classNames="post"
-                    >
-                    <CreatePost callback={removeItemArr} arr={obj} index={i} post={item}/>
+                        classNames="post">
+                        <CreatePost callback={removeItemArr} arr={obj} index={item.id} post={item}/>
                     </CSSTransition>
             )}
             </TransitionGroup>

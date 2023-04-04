@@ -1,7 +1,15 @@
 import React from "react";
-import '../style/style.css'
+import { useNavigate, useLocation } from "react-router-dom";
+import '../style/style.css';
 
 const CreatePost = (props) => {
+  const navigation = useNavigate();
+  const location = useLocation();
+
+  const PushLink = id => {
+    navigation(`${location.pathname}/${id}`);
+  };
+
   const clkRemoveItem = event => {
     const target = event.target;
     const elemArr = target.closest('.main_contant');
@@ -19,13 +27,13 @@ const CreatePost = (props) => {
 
     return (
         <div className="main_contant">
-
               <div className="contant_text">
-                <h1 style={{margin: 5}}>{props.index+1}. {props.post.title}</h1>
+                <h1 style={{margin: 5}}>{props.index}. {props.post.title}</h1>
                 <p style={{fontSize: 16}}>{props.post.body}</p>
               </div>
 
-              <div>
+              <div style={{display: 'flex'}}>
+                <button style={{padding: 10, marginRight: 10}} onClick={() => PushLink(props.index)}>Открыть</button>
                 <button style={{padding: 10}} onClick={clkRemoveItem}>Удалить</button>
               </div>
 
