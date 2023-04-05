@@ -1,9 +1,9 @@
 import React from "react";  
 import CreatePost from "./Post";
 import ButtonSwitchList from "../components/ButtonSwitchList";
+import { LoadingAnimate } from "./loadingAnimate";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import '../style/style.css';
-import '../style/styleLoad.css';
 
 const CreatePostList = ({callback2, lengthArr, obj, title, load, status, listElem, setListElem}) => {
     const removeItemArr = index => {
@@ -20,16 +20,7 @@ const CreatePostList = ({callback2, lengthArr, obj, title, load, status, listEle
         );
     } else if (load) {
         return (
-            <div className="content_load">
-                <div className="sk-chase">
-                    <div className="sk-chase-dot"></div>
-                    <div className="sk-chase-dot"></div>
-                    <div className="sk-chase-dot"></div>
-                    <div className="sk-chase-dot"></div>
-                    <div className="sk-chase-dot"></div>
-                    <div className="sk-chase-dot"></div>
-                </div>
-            </div>
+            <LoadingAnimate/>
         );
     };
       
